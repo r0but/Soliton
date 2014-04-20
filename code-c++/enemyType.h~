@@ -40,8 +40,6 @@ public:
 			return 'v';
 		else if (heading == 'd')
 			return '^';
-		else
-			return 'O';
 	}
 	void setPosition(int x, int y, int headingSet){
 		xCoord = x;
