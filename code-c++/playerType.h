@@ -41,14 +41,19 @@ public:
 		xCoord = xSet;
 		yCoord = ySet;
 	}
+	char getIcon(){
+		return icon;
+	}
 	
 	playerType(int xSet = 10, int ySet = 10){
 		xCoord = xSet;
 		yCoord = ySet;
+		icon = "@";
 	}	
 private:
 	int xCoord;
 	int yCoord;
+	char icon;
 };
 
 #endif

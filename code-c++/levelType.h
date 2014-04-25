@@ -13,9 +13,17 @@ public:
 	void iterateMap(char input){
 		player.move(input, vertLevelSize, horizLevelSize);
 		
-		
-		// Code for enemy movement goes here. Will likely
-		// have to use a linked list, or possibly a dynamic array.
+		// Code for enemy movement goes here. Fuck it, using a 
+		// constant-size array.
+	}
+	
+	void drawMap(){
+		for (int y = 0; y < vertLevelSize; y++){
+			for (int x = 0; x < horizLevelSize; x++){
+				if (player.getYCoord == y && player.getXCoord() == x)
+					cout << player.getIcon();
+				
+			}
 	}
 	
 	bool checkIfWall(int xCoord, int yCoord){
@@ -26,6 +34,9 @@ public:
 		else
 			return false;
 	}
+	
+	void checkEnemyPositions(int x, int y){
+		for (int i = 0; i < numOfEnemies
 	
 	void buildLevel(ifstream &levelFile){
 		int enemyCount = 0;
@@ -61,10 +72,12 @@ public:
 		vertLevelSize = 25;
 		horizLevelSize = 80;
 		buildLevel(levelFile);
+		numOfEnemies = 25;
 	}
 private:
 	int vertLevelSize;
 	int horizLevelSize;
+	int numOfEnemies;
 	playerType player;
 	enemyType enemyArray[25];
 	char levelArray[80][25];
