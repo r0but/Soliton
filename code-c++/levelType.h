@@ -31,6 +31,8 @@ public:
 		int enemyCount = 0;
 		for (int y = 0; y < horizLevelSize; y++){
 			for (int x = 0; x < vertLevelSize; x++){
+			
+				// Should probably put this stuff in its own function
 				char currentTile = levelFile.get();
 				if (currentTile == '\n')
 					break;
@@ -40,17 +42,22 @@ public:
 						break;
 					case '>':
 						enemyArray[enemyCount].setPosition(x, y, 'l');
+						enemyCount++;
 						break;
 					case '<':
 						enemyArray[enemyCount].setPosition(x, y, 'r');
+						enemyCount++;
 						break;
 					case '^':
 						enemyArray[enemyCount].setPosition(x, y, 'd');
+						enemyCount++;
 						break;
 					case 'v':
 						enemyArray[enemyCount].setPosition(x, y, 'u');
+						enemyCount++;
 						break;
 					default:
+						levelArray[x][y] = currentTile;
 						break;
 				}
 			}
