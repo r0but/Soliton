@@ -41,9 +41,7 @@ public:
 		xCoord = xSet;
 		yCoord = ySet;
 	}
-	char getIcon(){
-		return icon;
-	}
+	pl
 	
 	playerType(int xSet = 10, int ySet = 10){
 		xCoord = xSet;
