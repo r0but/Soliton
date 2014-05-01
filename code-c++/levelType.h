@@ -10,11 +10,12 @@ using namespace std;
 
 class levelType{
 public:
-	void iterateMap(char input){
+	int iterateMap(char input){
+		// Returns value 0 if game is to continue, 1 if the player
+		// has won, and 2 if the player has lost.
 		player.move(input, vertLevelSize, horizLevelSize);
 		
-		// Code for enemy movement goes here. Fuck it, using a 
-		// constant-size array.
+		l
 	}
 	
 	void drawMap(){
@@ -35,7 +36,7 @@ public:
 			return false;
 	}
 	
-	void checkEnemyPositions(int x, int y){
+	bool checkEnemyPositions(int x, int y){
 		for (int i = 0; i < numOfEnemies
 	
 	void buildLevel(ifstream &levelFile){
@@ -43,7 +44,6 @@ public:
 		for (int y = 0; y < horizLevelSize; y++){
 			for (int x = 0; x < vertLevelSize; x++){
 			
-				// Should probably put this stuff in its own function
 				char currentTile = levelFile.get();
 				if (currentTile == '\n')
 					break;
@@ -79,12 +79,10 @@ public:
 		vertLevelSize = 25;
 		horizLevelSize = 80;
 		buildLevel(levelFile);
-		numOfEnemies = 25;
 	}
 private:
 	int vertLevelSize;
 	int horizLevelSize;
-	int numOfEnemies;
 	playerType player;
 	enemyType enemyArray[25];
 	char levelArray[80][25];
