@@ -50,22 +50,27 @@ public:
 				switch (currentTile){
 					case '@':
 						player.setPosition(x, y);
+						levelArray[x][y] = '.';
 						break;
 					case '>':
 						enemyArray[enemyCount].setPosition(x, y, 'l');
 						enemyCount++;
+						levelArray[x][y] = '.';
 						break;
 					case '<':
 						enemyArray[enemyCount].setPosition(x, y, 'r');
 						enemyCount++;
+						levelArray[x][y] = '.';
 						break;
 					case '^':
 						enemyArray[enemyCount].setPosition(x, y, 'd');
 						enemyCount++;
+						levelArray[x][y] = '.';
 						break;
 					case 'v':
 						enemyArray[enemyCount].setPosition(x, y, 'u');
 						enemyCount++;
+						levelarray[x][y] = '.';;
 						break;
 					default:
 						levelArray[x][y] = currentTile;
