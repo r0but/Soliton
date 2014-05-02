@@ -11,7 +11,7 @@ using namespace std;
 class levelType{
 public:
 	int iterateMap(char input){
-		player.move(input, vertLevelSize, horizLevelSize);
+		player.move(input, levelArray);
 		return 0;
 	}
 	
@@ -21,6 +21,10 @@ public:
 			for (int x = 0; x < horizLevelSize; x++){
 				if (player.getYCoord() == y && player.getXCoord() == x)
 					cout << player.getIcon();
+				else if (levelArray[x][y] == '%'){
+					cout << endl;
+					break;
+				}
 				else if (levelArray[x][y] == '$'){
 					endOfMap = true;
 					break;
@@ -30,6 +34,9 @@ public:
 			}
 			if (endOfMap)
 				break;
+		}
+		for (int i = 0; i < 25 - vertLevelSize; i++){
+			cout << endl;
 		}
 	}
 	
@@ -57,15 +64,14 @@ public:
 		
 		int enemyCount = 0;
 		bool endOfFile = false;
-		for (int y = 0; y < horizLevelSize; y++){
+		for (int y = 0; y < 25; y++){
 			if (endOfFile || levelFile.eof()){
 				levelArray[0][y] = '$';
 				break;
 			}
-			for (int x = 0; x < vertLevelSize; x++){
+			for (int x = 0; x < 80; x++){
 				bool endOfLine = false;
 				char currentTile = levelFile.get();
-				cout << currentTile << endl;
 				if (levelFile.eof()){
 					endOfFile = true;
 					break;
@@ -94,9 +100,10 @@ public:
 					case 'v':
 						enemyArray[enemyCount].setPosition(x, y, 'u');
 						enemyCount++;
-						levelArray[x][y] = '.';;
+						levelArray[x][y] = '.';
 						break;
 					case '\n':
+						levelArray[x][y] = '%';
 						endOfLine = true;
 						break;
 					case '$':
@@ -109,8 +116,7 @@ public:
 				if (endOfLine)
 					break;
 			}
-			
-			
+			vertLevelSize = y;			
 		}
 	}
 
