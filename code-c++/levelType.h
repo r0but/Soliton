@@ -11,20 +11,18 @@ using namespace std;
 class levelType{
 public:
 	int iterateMap(char input){
-		// Returns value 0 if game is to continue, 1 if the player
-		// has won, and 2 if the player has lost.
+		
 		player.move(input, vertLevelSize, horizLevelSize);
 		
-		l
 	}
 	
 	void drawMap(){
 		for (int y = 0; y < vertLevelSize; y++){
 			for (int x = 0; x < horizLevelSize; x++){
-				if (player.getYCoord == y && player.getXCoord() == x)
-					cout << player.getIcon();
-				
-			}
+				if (player.getYCoord() == y && player.getXCoord() == x)
+					std::cout << player.getIcon();
+			}	
+		}
 	}
 	
 	bool checkIfWall(int xCoord, int yCoord){
@@ -36,45 +34,51 @@ public:
 			return false;
 	}
 	
-	bool checkEnemyPositions(int x, int y){
-		for (int i = 0; i < numOfEnemies
+	//bool checkEnemyPositions(int x, int y){
+	//	for (int i = 0; i < numOfEnemies
 	
 	void buildLevel(ifstream &levelFile){
 		int enemyCount = 0;
-		for (int y = 0; y < horizLevelSize; y++){
-			for (int x = 0; x < vertLevelSize; x++){
-			
-				char currentTile = levelFile.get();
-				if (currentTile == '\n')
-					break;
-				switch (currentTile){
-					case '@':
-						player.setPosition(x, y);
-						levelArray[x][y] = '.';
+		int tileCount = 0;
+		
+		// Going to use tileCount to figure out how many tiles there are
+		// left when EoF hits, then fill the rest with spaces.
+		while(!levelFile.eof()){
+			for (int y = 0; y < horizLevelSize; y++){
+				for (int x = 0; x < vertLevelSize; x++){
+					char currentTile = levelFile.get();
+					if (currentTile == '\n')
 						break;
-					case '>':
-						enemyArray[enemyCount].setPosition(x, y, 'l');
-						enemyCount++;
-						levelArray[x][y] = '.';
-						break;
-					case '<':
-						enemyArray[enemyCount].setPosition(x, y, 'r');
-						enemyCount++;
-						levelArray[x][y] = '.';
-						break;
-					case '^':
-						enemyArray[enemyCount].setPosition(x, y, 'd');
-						enemyCount++;
-						levelArray[x][y] = '.';
-						break;
-					case 'v':
-						enemyArray[enemyCount].setPosition(x, y, 'u');
-						enemyCount++;
-						levelarray[x][y] = '.';;
-						break;
-					default:
-						levelArray[x][y] = currentTile;
-						break;
+					switch (currentTile){
+						case '@':
+							player.setPosition(x, y);
+							levelArray[x][y] = '.';
+							break;
+						case '>':
+							enemyArray[enemyCount].setPosition(x, y, 'l');
+							enemyCount++;
+							levelArray[x][y] = '.';
+							break;
+						case '<':
+							enemyArray[enemyCount].setPosition(x, y, 'r');
+							enemyCount++;
+							levelArray[x][y] = '.';
+							break;
+						case '^':
+							enemyArray[enemyCount].setPosition(x, y, 'd');
+							enemyCount++;
+							levelArray[x][y] = '.';
+							break;
+						case 'v':
+							enemyArray[enemyCount].setPosition(x, y, 'u');
+							enemyCount++;
+							levelArray[x][y] = '.';;
+							break;
+						default:
+							levelArray[x][y] = currentTile;
+							break;
+					}
+					tileCount++;
 				}
 			}
 		}

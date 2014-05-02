@@ -48,7 +48,7 @@ public:
 	playerType(int xSet = 10, int ySet = 10){
 		xCoord = xSet;
 		yCoord = ySet;
-		icon = "@";
+		icon = '@';
 	}	
 private:
 	int xCoord;
