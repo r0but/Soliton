@@ -11,17 +11,25 @@ using namespace std;
 class levelType{
 public:
 	int iterateMap(char input){
-		
 		player.move(input, vertLevelSize, horizLevelSize);
-		
+		return 0;
 	}
 	
 	void drawMap(){
+		bool endOfMap = false;
 		for (int y = 0; y < vertLevelSize; y++){
 			for (int x = 0; x < horizLevelSize; x++){
 				if (player.getYCoord() == y && player.getXCoord() == x)
-					std::cout << player.getIcon();
-			}	
+					cout << player.getIcon();
+				else if (levelArray[x][y] == '$'){
+					endOfMap = true;
+					break;
+				}
+				else
+					cout << levelArray[x][y];
+			}
+			if (endOfMap)
+				break;
 		}
 	}
 	
@@ -38,49 +46,71 @@ public:
 	//	for (int i = 0; i < numOfEnemies
 	
 	void buildLevel(ifstream &levelFile){
-		int enemyCount = 0;
-		int tileCount = 0;
-		
-		// Going to use tileCount to figure out how many tiles there are
-		// left when EoF hits, then fill the rest with spaces.
-		while(!levelFile.eof()){
-			for (int y = 0; y < horizLevelSize; y++){
-				for (int x = 0; x < vertLevelSize; x++){
-					char currentTile = levelFile.get();
-					if (currentTile == '\n')
-						break;
-					switch (currentTile){
-						case '@':
-							player.setPosition(x, y);
-							levelArray[x][y] = '.';
-							break;
-						case '>':
-							enemyArray[enemyCount].setPosition(x, y, 'l');
-							enemyCount++;
-							levelArray[x][y] = '.';
-							break;
-						case '<':
-							enemyArray[enemyCount].setPosition(x, y, 'r');
-							enemyCount++;
-							levelArray[x][y] = '.';
-							break;
-						case '^':
-							enemyArray[enemyCount].setPosition(x, y, 'd');
-							enemyCount++;
-							levelArray[x][y] = '.';
-							break;
-						case 'v':
-							enemyArray[enemyCount].setPosition(x, y, 'u');
-							enemyCount++;
-							levelArray[x][y] = '.';;
-							break;
-						default:
-							levelArray[x][y] = currentTile;
-							break;
-					}
-					tileCount++;
-				}
+	
+		// Initialize array with ' ' (space) 
+		// character, signifying an empty tile
+		for (int y = 0; y < horizLevelSize; y++){
+			for (int x = 0; x < vertLevelSize; x++){
+				levelArray[x][y] = ' ';
 			}
+		}
+		
+		int enemyCount = 0;
+		bool endOfFile = false;
+		for (int y = 0; y < horizLevelSize; y++){
+			if (endOfFile || levelFile.eof()){
+				levelArray[0][y] = '$';
+				break;
+			}
+			for (int x = 0; x < vertLevelSize; x++){
+				bool endOfLine = false;
+				char currentTile = levelFile.get();
+				cout << currentTile << endl;
+				if (levelFile.eof()){
+					endOfFile = true;
+					break;
+				}
+				
+				switch (currentTile){
+					case '@':
+						player.setPosition(x, y);
+						levelArray[x][y] = '.';
+						break;
+					case '>':
+						enemyArray[enemyCount].setPosition(x, y, 'l');
+						enemyCount++;
+						levelArray[x][y] = '.';
+						break;
+					case '<':
+						enemyArray[enemyCount].setPosition(x, y, 'r');
+						enemyCount++;
+						levelArray[x][y] = '.';
+						break;
+					case '^':
+						enemyArray[enemyCount].setPosition(x, y, 'd');
+						enemyCount++;
+						levelArray[x][y] = '.';
+						break;
+					case 'v':
+						enemyArray[enemyCount].setPosition(x, y, 'u');
+						enemyCount++;
+						levelArray[x][y] = '.';;
+						break;
+					case '\n':
+						endOfLine = true;
+						break;
+					case '$':
+						endOfFile = true;
+						break;
+					default:
+						levelArray[x][y] = currentTile;
+						break;
+				}
+				if (endOfLine)
+					break;
+			}
+			
+			
 		}
 	}
 
