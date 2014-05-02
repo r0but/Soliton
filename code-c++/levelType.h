@@ -12,7 +12,13 @@ class levelType{
 public:
 	int iterateMap(char input){
 		player.move(input, levelArray);
-		return 0;
+		
+		if (levelArray[player.getXCoord()][player.getYCoord()] == 'E'){
+			return 1;
+		}
+		else{
+			return 0;
+		}
 	}
 	
 	void drawMap(){
