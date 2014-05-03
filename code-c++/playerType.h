@@ -19,13 +19,17 @@ public:
 	}
 	
 	void move(char input, char levelArray[80][25]){
-		if (input == 'w' && levelArray[xCoord][yCoord - 1] == '.')
+		if (input == 'w' && (levelArray[xCoord][yCoord - 1] == '.' ||
+						     levelArray[xCoord][yCoord - 1] == 'E'))
 			moveUp();
-		else if (input == 's' && levelArray[xCoord][yCoord + 1] == '.')
+		else if (input == 's' && (levelArray[xCoord][yCoord + 1] == '.' || 
+								  levelArray[xCoord][yCoord + 1] == 'E'))
 			moveDown();
-		else if (input == 'a' && levelArray[xCoord - 1][yCoord] == '.')
+		else if (input == 'a' && (levelArray[xCoord - 1][yCoord] == '.' || 
+								  levelArray[xCoord - 1][yCoord] == 'E'))
 			moveLeft();
-		else if (input == 'd' && levelArray[xCoord + 1][yCoord] == '.')
+		else if (input == 'd' && (levelArray[xCoord + 1][yCoord] == '.' ||
+								  levelArray[xCoord + 1][yCoord] == 'E'))
 			moveRight();
 	}
 	int getXCoord(){

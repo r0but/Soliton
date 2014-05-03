@@ -4,16 +4,30 @@
 
 using namespace std;
 
+void drawWinScreen(){
+	for (int i = 0; i < 25; i++){
+		cout << endl;
+	}
+	
+	cout << "Congratulate! You are winner!" << endl;
+}
+
 void gameLoop(levelType level){
 	char userInput;
 	while(true){
+		int winOrLose = 0;
 		level.drawMap();
 		cin >> userInput;
 		if (userInput == 'q')
 			break;
 		else
-			level.iterateMap(userInput);
+			winOrLose = level.iterateMap(userInput);
 		cout << endl << endl;
+		
+		if (winOrLose == 1){
+			drawWinScreen();
+			break;
+		}
 	}
 }
 

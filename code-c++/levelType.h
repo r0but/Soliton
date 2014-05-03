@@ -71,6 +71,7 @@ public:
 		int enemyCount = 0;
 		bool endOfFile = false;
 		for (int y = 0; y < 25; y++){
+			vertLevelSize = y;
 			if (endOfFile || levelFile.eof()){
 				levelArray[0][y] = '$';
 				break;
@@ -121,8 +122,7 @@ public:
 				}
 				if (endOfLine)
 					break;
-			}
-			vertLevelSize = y;			
+			}		
 		}
 	}
 
