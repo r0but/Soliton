@@ -55,15 +55,12 @@ public:
 			return false;
 	}
 	
-	//bool checkEnemyPositions(int x, int y){
-	//	for (int i = 0; i < numOfEnemies
-	
 	void buildLevel(ifstream &levelFile){
 	
 		// Initialize array with ' ' (space) 
 		// character, signifying an empty tile
-		for (int y = 0; y < horizLevelSize; y++){
-			for (int x = 0; x < vertLevelSize; x++){
+		for (int y = 0; y < 25; y++){
+			for (int x = 0; x < 80; x++){
 				levelArray[x][y] = ' ';
 			}
 		}
@@ -81,6 +78,7 @@ public:
 				char currentTile = levelFile.get();
 				if (levelFile.eof()){
 					endOfFile = true;
+					levelArray[x][y] = '$';
 					break;
 				}
 				
