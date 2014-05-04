@@ -31,7 +31,7 @@ public:
 	int getYCoord(){
 		return yCoord;
 	}
-	char spriteToDisplay(){
+	char toDisplay(){
 		if (heading == 'l')
 			return '>';
 		else if (heading == 'r')
@@ -62,3 +62,4 @@ private:
 };
 
 #endif
+

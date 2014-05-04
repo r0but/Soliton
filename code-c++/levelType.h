@@ -25,13 +25,16 @@ public:
 		bool endOfMap = false;
 		for (int y = 0; y < vertLevelSize; y++){
 			for (int x = 0; x < horizLevelSize; x++){
+				char enemyHeading = isEnemyHere(x, y);
 				if (player.getYCoord() == y && player.getXCoord() == x)
 					cout << player.getIcon();
+				else if (enemyHeading != ' ')
+					cout << enemyHeading;
 				else if (levelArray[x][y] == '%'){
 					cout << endl;
 					break;
 				}
-				else if (levelArray[x][y] == '$'){
+				else if (levelArray[x][y] == '#' || levelArray[x][y] == '$'){
 					endOfMap = true;
 					break;
 				}
@@ -41,7 +44,7 @@ public:
 			if (endOfMap)
 				break;
 		}
-		for (int i = 0; i < 25 - vertLevelSize; i++){
+		for (int i = 0; i < 24 - vertLevelSize; i++){
 			cout << endl;
 		}
 	}
@@ -53,6 +56,20 @@ public:
 			return true;
 		else
 			return false;
+	}
+	
+	void loadEnemyPaths(ifstream &levelFile){
+		
+	}
+	
+	char isEnemyHere(int x, int y){
+		for (int i = 0; i < 25; i++){
+			if (enemyArray[i].getXCoord() == x && 
+					enemyArray[i].getYCoord() == y){
+				return enemyArray[i].toDisplay();				
+			}
+		}
+		return ' ';
 	}
 	
 	void buildLevel(ifstream &levelFile){
@@ -70,7 +87,7 @@ public:
 		for (int y = 0; y < 25; y++){
 			vertLevelSize = y;
 			if (endOfFile || levelFile.eof()){
-				levelArray[0][y] = '$';
+				levelArray[0][y] = '#';
 				break;
 			}
 			for (int x = 0; x < 80; x++){
@@ -78,7 +95,7 @@ public:
 				char currentTile = levelFile.get();
 				if (levelFile.eof()){
 					endOfFile = true;
-					levelArray[x][y] = '$';
+					levelArray[x][y] = '#';
 					break;
 				}
 				
@@ -111,17 +128,18 @@ public:
 						levelArray[x][y] = '%';
 						endOfLine = true;
 						break;
-					case '$':
+					case '#':
 						endOfFile = true;
 						break;
 					default:
 						levelArray[x][y] = currentTile;
 						break;
 				}
-				if (endOfLine)
+				if (endOfLine || endOfFile)
 					break;
 			}		
 		}
+		
 	}
 
 	levelType(ifstream &levelFile){
@@ -138,3 +156,4 @@ private:
 };
 
 #endif
+
