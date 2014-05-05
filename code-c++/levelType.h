@@ -72,7 +72,7 @@ public:
 	}
 	
 	bool isEnemyHere(int x, int y){
-		for (int i = 0; i < 25; i++){
+		for (int i = 0; i < numOfEnemies; i++){
 			if (enemyArray[i].getXCoord() == x && 
 					enemyArray[i].getYCoord() == y){
 				return true;				
