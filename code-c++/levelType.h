@@ -58,10 +58,6 @@ public:
 			return false;
 	}
 	
-	void loadEnemyPaths(ifstream &levelFile){
-		
-	}
-	
 	char isEnemyHere(int x, int y){
 		for (int i = 0; i < 25; i++){
 			if (enemyArray[i].getXCoord() == x && 
@@ -71,6 +67,15 @@ public:
 		}
 		return ' ';
 	}
+	
+	/*void loadEnemyPaths(ifstream &levelFile){
+		if (levelFile.eof())
+			return;
+			
+		for (int i = 0; i < 25; i++){
+			enemyArray[i].loadPatrolPath(levelFile);
+		}
+	}*/
 	
 	void buildLevel(ifstream &levelFile){
 	
@@ -82,12 +87,11 @@ public:
 			}
 		}
 		
-		int enemyCount = 0;
 		bool endOfFile = false;
 		for (int y = 0; y < 25; y++){
 			vertLevelSize = y;
 			if (endOfFile || levelFile.eof()){
-				levelArray[0][y] = '#';
+				levelArray[0][y] = '$';
 				break;
 			}
 			for (int x = 0; x < 80; x++){
@@ -95,7 +99,7 @@ public:
 				char currentTile = levelFile.get();
 				if (levelFile.eof()){
 					endOfFile = true;
-					levelArray[x][y] = '#';
+					levelArray[x][y] = '$';
 					break;
 				}
 				
@@ -105,30 +109,30 @@ public:
 						levelArray[x][y] = '.';
 						break;
 					case '>':
-						enemyArray[enemyCount].setPosition(x, y, 'l');
-						enemyCount++;
+						enemyArray[numOfEnemies].setPosition(x, y, 'l');
+						numOfEnemies++;
 						levelArray[x][y] = '.';
 						break;
 					case '<':
-						enemyArray[enemyCount].setPosition(x, y, 'r');
-						enemyCount++;
+						enemyArray[numOfEnemies].setPosition(x, y, 'r');
+						numOfEnemies++;
 						levelArray[x][y] = '.';
 						break;
 					case '^':
-						enemyArray[enemyCount].setPosition(x, y, 'd');
-						enemyCount++;
+						enemyArray[numOfEnemies].setPosition(x, y, 'd');
+						numOfEnemies++;
 						levelArray[x][y] = '.';
 						break;
 					case 'v':
-						enemyArray[enemyCount].setPosition(x, y, 'u');
-						enemyCount++;
+						enemyArray[numOfEnemies].setPosition(x, y, 'u');
+						numOfEnemies++;
 						levelArray[x][y] = '.';
 						break;
 					case '\n':
 						levelArray[x][y] = '%';
 						endOfLine = true;
 						break;
-					case '#':
+					case '$':
 						endOfFile = true;
 						break;
 					default:
@@ -139,17 +143,19 @@ public:
 					break;
 			}		
 		}
-		
+		//loadEnemyPaths(levelFile);	
 	}
 
 	levelType(ifstream &levelFile){
 		vertLevelSize = 25;
 		horizLevelSize = 80;
+		numOfEnemies = 0;
 		buildLevel(levelFile);
 	}
 private:
 	int vertLevelSize;
 	int horizLevelSize;
+	int numOfEnemies;
 	playerType player;
 	enemyType enemyArray[25];
 	char levelArray[80][25];

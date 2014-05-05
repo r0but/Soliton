@@ -3,6 +3,11 @@
 
 using namespace std;
 
+struct actionType{
+	char action;
+	char direction;
+};
+
 class enemyType{
 public:
 	void moveUp(){
@@ -49,15 +54,33 @@ public:
 		heading = headingSet;
 	}
 	
+	// NOT FINISHED
+	/*void loadPatrolPath(ifstream &levelFile){
+		int i = 0;
+		do{
+			if (currentChar == ' ')
+				currentChar = levelFile.get();
+			patrolPath[i].action = currentChar;
+			currentChar = levelFile.get();
+			patrolPath[i].direction = currentChar();
+		} while (currentChar != '#');		
+	}*/
+	
 	enemyType(int xSet = 3, int ySet = 3, int headingSet = 'l'){
 		xCoord = xSet;
 		yCoord = ySet;
 		headingSet = 'l';
+		for (int i = 0; i < 100; i++){
+			patrolPath[i].action = '$';
+			patrolPath[i].direction = '$';
+		}
 	}
 	
 private:
 	int xCoord;
 	int yCoord;
+	actionType patrolPath[100];
+	int pathLoc;
 	char heading;
 };
 
