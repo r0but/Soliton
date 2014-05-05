@@ -94,8 +94,6 @@ public:
 			pathLoc = 0;
 		else
 			pathLoc++;
-			
-		cout << endl << "MOVEMENT: " << direction << action << endl;
 	}
 
 	void loadPatrolPath(ifstream &levelFile){
@@ -117,8 +115,6 @@ public:
 		// Terminating
 		patrolPath[i].action = '$';
 		patrolPath[i].direction = '$';
-		
-		cout << patrolPath[0].action << patrolPath[0].direction << " ";
 	}
 	
 	enemyType(int xSet = 3, int ySet = 3, int headingSet = 'l'){

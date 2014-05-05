@@ -13,15 +13,15 @@ public:
 	int iterateMap(char input){
 		player.move(input, levelArray);
 		
+		for (int i = 0; i <= numOfEnemies; i++){
+			enemyArray[i].moveAlongPath();
+		}
+		
 		if (levelArray[player.getXCoord()][player.getYCoord()] == 'E'){
 			return 1;
 		}
 		else{
 			return 0;
-		}
-		
-		for (int i = 0; i < numOfEnemies; i++){
-			enemyArray[i].moveAlongPath();
 		}
 	}
 	
@@ -29,13 +29,6 @@ public:
 		bool endOfMap = false;
 		for (int y = 0; y < vertLevelSize; y++){
 			for (int x = 0; x < horizLevelSize; x++){
-			
-				for (int i = 0; i < numOfEnemies; i++){
-					if (enemyArray[i].getXCoord() == x &&
-							enemyArray[i].getYCoord() == y){
-						cout << enemyArray[i].toDisplay();
-					}
-				}
 				if (player.getYCoord() == y && player.getXCoord() == x)
 					cout << player.getIcon();
 				else if (levelArray[x][y] == '%'){
@@ -46,8 +39,18 @@ public:
 					endOfMap = true;
 					break;
 				}
+				else if (isEnemyHere(x, y)){
+					for (int i = 0; i < numOfEnemies; i++){
+						if (enemyArray[i].getXCoord() == x &&
+								enemyArray[i].getYCoord() == y){
+							cout << enemyArray[i].toDisplay();
+						}
+					}
+				}
 				else
 					cout << levelArray[x][y];
+					
+				
 			}
 			if (endOfMap)
 				break;
@@ -68,14 +71,14 @@ public:
 			return false;
 	}
 	
-	char isEnemyHere(int x, int y){
+	bool isEnemyHere(int x, int y){
 		for (int i = 0; i < 25; i++){
 			if (enemyArray[i].getXCoord() == x && 
 					enemyArray[i].getYCoord() == y){
-				return enemyArray[i].toDisplay();				
+				return true;				
 			}
 		}
-		return ' ';
+		return false;
 	}
 
 	void loadEnemyPaths(ifstream &levelFile){
