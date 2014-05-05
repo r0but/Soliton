@@ -11,23 +11,19 @@ struct actionType{
 class enemyType{
 public:
 	void moveUp(){
-		if (yCoord > 0)
-			yCoord -= 1;
+		yCoord -= 1;
 		heading = 'u';
 	}
-	void moveDown(int vertLevelSize){
-		if (yCoord < vertLevelSize)
-			yCoord += 1;
+	void moveDown(){
+		yCoord += 1;
 		heading = 'd';
 	}
 	void moveLeft(){
-		if (xCoord < 0)
-			xCoord -= 1;
+		xCoord -= 1;
 		heading = 'l';
 	}
-	void moveRight(int horizLevelSize){
-		if (xCoord < horizLevelSize)
-			xCoord += 1;
+	void moveRight(){
+		xCoord += 1;
 		heading = 'r';
 	}
 	int getXCoord(){
@@ -54,22 +50,82 @@ public:
 		heading = headingSet;
 	}
 	
-	// NOT FINISHED
-	/*void loadPatrolPath(ifstream &levelFile){
+	void moveAlongPath(){
+		char direction = patrolPath[pathLoc].direction;
+		char action = patrolPath[pathLoc].action;
+		
+		if (action == 'm'){
+			switch (direction){
+				case 'l':
+					moveLeft();
+					break;
+				case 'r':
+					moveRight();
+					break;
+				case 'u':
+					moveUp();
+					break;
+				case 'd':
+					moveDown();
+					break;
+				default:
+					cout << "OH GOD";
+			}
+		}
+		if (action == 'l'){
+			switch (direction){
+				case 'l':
+					heading = 'l';
+					break;
+				case 'r':
+					heading = 'r';
+					break;
+				case 'u':
+					heading = 'u';
+					break;
+				case 'd':
+					heading = 'd';
+					break;
+				default:
+					cout << "OH GOD";
+			}
+		}	
+		if (patrolPath[pathLoc + 1].action == '$')
+			pathLoc = 0;
+		else
+			pathLoc++;
+			
+		cout << endl << "MOVEMENT: " << direction << action << endl;
+	}
+
+	void loadPatrolPath(ifstream &levelFile){
+		char currentChar = levelFile.get();
+		
 		int i = 0;
 		do{
-			if (currentChar == ' ')
+			currentChar = levelFile.get();
+			if (currentChar == ' ' || currentChar == '#')
 				currentChar = levelFile.get();
+			if (levelFile.eof())
+				break;
 			patrolPath[i].action = currentChar;
 			currentChar = levelFile.get();
-			patrolPath[i].direction = currentChar();
-		} while (currentChar != '#');		
-	}*/
+			patrolPath[i].direction = currentChar;
+			i++;
+		} while (currentChar != '#');
+		
+		// Terminating
+		patrolPath[i].action = '$';
+		patrolPath[i].direction = '$';
+		
+		cout << patrolPath[0].action << patrolPath[0].direction << " ";
+	}
 	
 	enemyType(int xSet = 3, int ySet = 3, int headingSet = 'l'){
 		xCoord = xSet;
 		yCoord = ySet;
 		headingSet = 'l';
+		pathLoc = 0;
 		for (int i = 0; i < 100; i++){
 			patrolPath[i].action = '$';
 			patrolPath[i].direction = '$';
@@ -85,4 +141,3 @@ private:
 };
 
 #endif
-

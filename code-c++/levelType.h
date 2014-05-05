@@ -19,17 +19,25 @@ public:
 		else{
 			return 0;
 		}
+		
+		for (int i = 0; i < numOfEnemies; i++){
+			enemyArray[i].moveAlongPath();
+		}
 	}
 	
 	void drawMap(){
 		bool endOfMap = false;
 		for (int y = 0; y < vertLevelSize; y++){
 			for (int x = 0; x < horizLevelSize; x++){
-				char enemyHeading = isEnemyHere(x, y);
+			
+				for (int i = 0; i < numOfEnemies; i++){
+					if (enemyArray[i].getXCoord() == x &&
+							enemyArray[i].getYCoord() == y){
+						cout << enemyArray[i].toDisplay();
+					}
+				}
 				if (player.getYCoord() == y && player.getXCoord() == x)
 					cout << player.getIcon();
-				else if (enemyHeading != ' ')
-					cout << enemyHeading;
 				else if (levelArray[x][y] == '%'){
 					cout << endl;
 					break;
@@ -43,7 +51,9 @@ public:
 			}
 			if (endOfMap)
 				break;
+				
 		}
+		
 		for (int i = 0; i < 24 - vertLevelSize; i++){
 			cout << endl;
 		}
@@ -67,20 +77,20 @@ public:
 		}
 		return ' ';
 	}
-	
-	/*void loadEnemyPaths(ifstream &levelFile){
+
+	void loadEnemyPaths(ifstream &levelFile){
 		if (levelFile.eof())
 			return;
-			
-		for (int i = 0; i < 25; i++){
+
+		for (int i = 0; i < numOfEnemies; i++){
 			enemyArray[i].loadPatrolPath(levelFile);
 		}
-	}*/
+	}
 	
 	void buildLevel(ifstream &levelFile){
 	
 		// Initialize array with ' ' (space) 
-		// character, signifying an empty tile
+		// characters, signifying an empty tile
 		for (int y = 0; y < 25; y++){
 			for (int x = 0; x < 80; x++){
 				levelArray[x][y] = ' ';
@@ -143,7 +153,7 @@ public:
 					break;
 			}		
 		}
-		//loadEnemyPaths(levelFile);	
+		loadEnemyPaths(levelFile);	
 	}
 
 	levelType(ifstream &levelFile){
@@ -162,4 +172,3 @@ private:
 };
 
 #endif
-
