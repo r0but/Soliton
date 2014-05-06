@@ -12,12 +12,20 @@ class levelType{
 public:
 	int iterateMap(char input){
 		player.move(input, levelArray);
+		int pX = player.getXCoord();
+		int pY = player.getYCoord();
 		
 		for (int i = 0; i <= numOfEnemies; i++){
 			enemyArray[i].moveAlongPath();
 		}
 		
-		if (levelArray[player.getXCoord()][player.getYCoord()] == 'E'){
+		for (int i = 0; i <= numOfEnemies; i++){
+			bool isCaught = enemyArray[i].checkForPlayer(levelArray, pX, pY);
+			if (isCaught)
+				return 2;
+		}
+		
+		if (levelArray[pX][pY] == 'E'){
 			return 1;
 		}
 		else{

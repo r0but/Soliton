@@ -50,6 +50,78 @@ public:
 		heading = headingSet;
 	}
 	
+	bool checkRight(char levelArray[80][25], int pX, int pY) const{
+		for (int i = 1; i <= 4; i++){
+			if (xCoord + i == pX && (yCoord + (i - 1) >= pY &&
+				yCoord - (i - 1) <= pY)){
+					return 1;
+			}
+		}
+		return 0;
+	}
+	
+	bool checkLeft(char levelarray[80][25], int pX, int pY) const{
+		for (int i = 1; i <= 4; i++){
+			if (xCoord - i == pX && (yCoord + (i - 1) >= pY &&
+				yCoord - (i - 1) <= pY)){
+					return 1;
+			}
+		}
+		return 0;
+	}
+	
+	bool checkUp(char levelarray[80][25], int pX, int pY) const{
+		for (int i = 1; i <= 4; i++){
+			if (yCoord - i == pY && (xCoord + (i - 1) >= pX &&
+				xCoord - (i - 1) <= pX)){
+					return 1;
+			}
+		}
+		return 0;
+	}
+	
+	bool checkDown(char levelarray[80][25], int pX, int pY) const{
+		for (int i = 1; i <= 4; i++){
+			if (yCoord + i == pY && (xCoord + (i - 1) >= pX &&
+				xCoord - (i - 1) <= pX)){
+					return 1;
+			}
+		}
+		return 0;
+	}
+	
+	bool checkForPlayer(char levelArray[80][25], int pX, int pY) const{
+		switch(heading){
+			case 'r':
+				if (checkRight(levelArray, pX, pY))
+					return 1;
+				else
+					return 0;
+				break;
+			case 'l':
+				if (checkLeft(levelArray, pX, pY))
+					return 1;
+				else
+					return 0;
+				break;
+			case 'd':
+				if (checkDown(levelArray, pX, pY))
+					return 1;
+				else
+					return 0;
+				break;
+			case 'u':
+				if (checkUp(levelArray, pX, pY))
+					return 1;
+				else
+					return 0;
+				break;
+			default:
+				return 0;
+		}
+		return 0;
+	}
+	
 	void moveAlongPath(){
 		char direction = patrolPath[pathLoc].direction;
 		char action = patrolPath[pathLoc].action;

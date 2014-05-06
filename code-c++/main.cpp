@@ -12,6 +12,10 @@ void drawWinScreen(){
 	cout << "Congratulate! You are winner!" << endl;
 }
 
+void drawLossScreen(){	
+	cout << endl << "You lose! Good day sir." << endl;
+}
+
 void gameLoop(levelType level){
 	char userInput;
 	while(true){
@@ -26,6 +30,12 @@ void gameLoop(levelType level){
 		
 		if (winOrLose == 1){
 			drawWinScreen();
+			level.drawMap();
+			break;
+		}
+		else if (winOrLose == 2){
+			drawLossScreen();
+			level.drawMap();
 			break;
 		}
 	}
