@@ -75,45 +75,49 @@ public:
 	}
 	
 	bool checkRight(char levelArray[80][25], int pX, int pY) const{
+		bool seePlayer = false;
 		for (int i = 1; i <= 4; i++){
 			if (xCoord + i == pX && (yCoord + (i - 1) >= pY &&
 				yCoord - (i - 1) <= pY)){
-					return 1;
+					seePlayer = true;
 			}
 		}
-		return 0;
+		return seePlayer;
 	}
 	
 	bool checkLeft(char levelarray[80][25], int pX, int pY) const{
+		bool seePlayer = false;
 		for (int i = 1; i <= 4; i++){
 			if (xCoord - i == pX && (yCoord + (i - 1) >= pY &&
 				yCoord - (i - 1) <= pY)){
-					return 1;
+					seePlayer = true;
 			}
 		}
-		return 0;
+		return seePlayer;
 	}
-	
+
 	bool checkUp(char levelarray[80][25], int pX, int pY) const{
+		bool seePlayer = false;
 		for (int i = 1; i <= 4; i++){
 			if (yCoord - i == pY && (xCoord + (i - 1) >= pX &&
 				xCoord - (i - 1) <= pX)){
-					return 1;
+					seePlayer = true;
 			}
 		}
-		return 0;
+		return seePlayer;
 	}
-	
+
 	bool checkDown(char levelarray[80][25], int pX, int pY) const{
+		bool seePlayer = false;
 		for (int i = 1; i <= 4; i++){
 			if (yCoord + i == pY && (xCoord + (i - 1) >= pX &&
 				xCoord - (i - 1) <= pX)){
-					return 1;
+					seePlayer = true;
 			}
 		}
-		return 0;
+		return seePlayer;
 	}
-	
+
 	bool checkForPlayer(char levelArray[80][25], int pX, int pY) const{
 		switch(heading){
 			case 'r':
