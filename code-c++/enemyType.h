@@ -217,7 +217,7 @@ public:
 			currentChar = levelFile.get();
 			
 			i++;
-		} while (currentChar != '\n' && !levelFile.eof());
+		} while (currentChar != '\n' && currentChar != '#' && !levelFile.eof());
 	}
 	
 	enemyType(int xSet = 3, int ySet = 3, int headingSet = 'l'){

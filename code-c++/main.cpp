@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include <iostream>
 #include <fstream>
+#include <string>
 #include "levelType.h"
 
 using namespace std;
@@ -66,17 +67,30 @@ void gameLoop(levelType level){
 }
 
 int main(){
-	// string levelName;
-	// cout << "Input file name of level to load: ";
-	// cin >> levelName;
+	bool userCont = true;
+	string levelName = "";
+	while (userCont){
+		cout << "Enter the filename for the level you want to load: ";
+		cin >> levelName;
+		
+		ifstream levelFile;
+		levelFile.open(levelName.c_str());		
+		
+		levelType level(levelFile);
+		
+		levelFile.close();
 	
-	ifstream levelFile("level1.txt");
-	
-	levelType level(levelFile);
-	
-	gameLoop(level);
-	
-	cout << endl;
+		gameLoop(level);
+		
+		char cUserCont;
+		cout << endl << "Would you like to continue? (y/n): ";
+		cin >> cUserCont;
+		
+		if (cUserCont == 'y' || cUserCont == 'Y')
+			userCont = true;
+		else
+			userCont = false;
+	}
 	cout << "Press ENTER to exit program." << endl;
 	cin.get();
 	cin.ignore();

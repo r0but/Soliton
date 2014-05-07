@@ -189,7 +189,6 @@ public:
 			}		
 		}
 		loadEnemyPaths(levelFile);
-		levelFile.close();
 	}
 
 	levelType(ifstream &levelFile){
