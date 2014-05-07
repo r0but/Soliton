@@ -35,19 +35,19 @@ struct actionType{
 class enemyType{
 public:
 	void moveUp(){
-		yCoord -= 1;
+		yCoord--;
 		heading = 'u';
 	}
 	void moveDown(){
-		yCoord += 1;
+		yCoord++;
 		heading = 'd';
 	}
 	void moveLeft(){
-		xCoord -= 1;
+		xCoord--;
 		heading = 'l';
 	}
 	void moveRight(){
-		xCoord += 1;
+		xCoord++;
 		heading = 'r';
 	}
 	int getXCoord(){
@@ -118,7 +118,11 @@ public:
 		return seePlayer;
 	}
 
-	bool checkForPlayer(char levelArray[80][25], int pX, int pY) const{
+	bool checkForPlayer(char levelArray[80][25], int pX, int pY){
+		if (xCoord == pX && yCoord == pY){
+			return 1;
+		}
+		
 		switch(heading){
 			case 'r':
 				if (checkRight(levelArray, pX, pY))
@@ -201,20 +205,19 @@ public:
 		
 		int i = 0;
 		do{
-			currentChar = levelFile.get();
-			if (currentChar == ' ' || currentChar == '#')
+			while (currentChar == '#' ||  currentChar == ' ' || 
+				   currentChar == '\n'){
 				currentChar = levelFile.get();
-			if (levelFile.eof())
-				break;
+			}
+			
 			patrolPath[i].action = currentChar;
 			currentChar = levelFile.get();
+			
 			patrolPath[i].direction = currentChar;
+			currentChar = levelFile.get();
+			
 			i++;
-		} while (currentChar != '#');
-		
-		// Terminating
-		patrolPath[i].action = '$';
-		patrolPath[i].direction = '$';
+		} while (currentChar != '\n' && !levelFile.eof());
 	}
 	
 	enemyType(int xSet = 3, int ySet = 3, int headingSet = 'l'){

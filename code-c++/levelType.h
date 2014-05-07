@@ -39,11 +39,11 @@ public:
 		int pX = player.getXCoord();
 		int pY = player.getYCoord();
 		
-		for (int i = 0; i <= numOfEnemies; i++){
+		for (int i = 0; i < numOfEnemies; i++){
 			enemyArray[i].moveAlongPath();
 		}
 		
-		for (int i = 0; i <= numOfEnemies; i++){
+		for (int i = 0; i < numOfEnemies; i++){
 			bool isCaught = enemyArray[i].checkForPlayer(levelArray, pX, pY);
 			if (isCaught)
 				return 2;
@@ -188,7 +188,8 @@ public:
 					break;
 			}		
 		}
-		loadEnemyPaths(levelFile);	
+		loadEnemyPaths(levelFile);
+		levelFile.close();
 	}
 
 	levelType(ifstream &levelFile){
