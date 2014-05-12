@@ -96,6 +96,10 @@ public:
 			}
 		}
 		
+		for (int x = 0; x <= 4; x++){
+			char seeX = xCoord + x;
+		}
+		
 		return seePlayer;
 	}
 

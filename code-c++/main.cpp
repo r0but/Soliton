@@ -69,9 +69,12 @@ void gameLoop(levelType level){
 int main(){
 	bool userCont = true;
 	string levelName = "";
+	bool  restart = false;
 	while (userCont){
-		cout << "Enter the filename for the level you want to load: ";
-		cin >> levelName;
+		if (!restart){
+			cout << "Enter the filename for the level you want to load: ";
+			cin >> levelName;
+		}
 		
 		ifstream levelFile;
 		levelFile.open(levelName.c_str());
@@ -88,11 +91,15 @@ int main(){
 		gameLoop(level);
 		
 		char cUserCont;
-		cout << endl << "Would you like to continue? (y/n): ";
+		cout << endl << "Would you like to continue, quit, or restart? (c/q/r): ";
 		cin >> cUserCont;
 		
-		if (cUserCont == 'y' || cUserCont == 'Y')
+		if (cUserCont == 'c' || cUserCont == 'C')
 			userCont = true;
+		else if (cUserCont == 'r' || cUserCont == 'R'){
+			restart = true;
+			userCont = true;
+		}
 		else
 			userCont = false;
 	}
