@@ -76,15 +76,29 @@ public:
 	
 	bool checkRight(char levelArray[80][25], int pX, int pY) const{
 		bool seePlayer = false;
-		for (int i = 1; i <= 4; i++){
+		/*for (int i = 1; i <= 4; i++){
 			if (xCoord + i == pX && (yCoord + (i - 1) >= pY &&
 				yCoord - (i - 1) <= pY)){
 					seePlayer = true;
 			}
 		}
+		*/
+		
+		// checking straight forward
+		for (int x = 0; x <= 4; x++){
+			char seeX = xCoord + x;
+			if (xCoord + x == pX){
+				seePlayer = true;
+				break;
+			}
+			if (levelArray[xCoord + x][yCoord] != '.'){
+				break;
+			}
+		}
+		
 		return seePlayer;
 	}
-	
+
 	bool checkLeft(char levelarray[80][25], int pX, int pY) const{
 		bool seePlayer = false;
 		for (int i = 1; i <= 4; i++){

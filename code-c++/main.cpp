@@ -74,8 +74,13 @@ int main(){
 		cin >> levelName;
 		
 		ifstream levelFile;
-		levelFile.open(levelName.c_str());		
-		
+		levelFile.open(levelName.c_str());
+
+		if (!levelFile.is_open()){
+			cout << "Level not found. Make sure you typed it correctly, ";
+			cout << "and that it is in the game's directory." << endl << endl;
+			continue;
+		}
 		levelType level(levelFile);
 		
 		levelFile.close();
@@ -91,8 +96,6 @@ int main(){
 		else
 			userCont = false;
 	}
-	cout << "Press ENTER to exit program." << endl;
-	cin.get();
-	cin.ignore();
+	
 	return 0;
 }
