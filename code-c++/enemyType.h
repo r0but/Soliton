@@ -81,13 +81,16 @@ public:
 		// checking straight forward
 		for (int x = 1; x <= 4; x++){
 			int seeX = xCoord + x;
-			if (xCoord + x == pX){
-				seePlayer = true;
-				break;
-			}
+			
 			if (levelArray[seeX][yCoord] != '.'){
 				break;
 			}
+			
+			if (seeX == pX){
+				seePlayer = true;
+				break;
+			}
+			
 		}
 		
 		// diagonal down
@@ -96,13 +99,14 @@ public:
 			int seeX = xCoord + x;
 			int seeY = yCoord + y;
 			
+			if (levelArray[seeX][seeY] != '.'){
+				break;
+			}
 			if (seeX == pX && seeY == pY){
 				seePlayer = true;
 				break;
 			}
-			if (levelArray[seeX][seeY] != '.'){
-				break;
-			}
+			
 			y++;
 		}
 		
@@ -112,13 +116,14 @@ public:
 			int seeX = xCoord + x;
 			int seeY = yCoord + y;
 			
+			if (levelArray[seeX][seeY] != '.'){
+				break;
+			}
 			if (seeX == pX && seeY == pY){
 				seePlayer = true;
 				break;
 			}
-			if (levelArray[seeX][seeY] != '.'){
-				break;
-			}
+			
 			y--;
 		}
 		
@@ -128,8 +133,12 @@ public:
 			int seeX = xCoord + x;
 			int seeY = yCoord + y;
 			
+			if (levelArray[seeX][seeY] != '.'){
+				break;
+			}
+			
 			if (x == 4){
-				if (seeX == pX && seeY == (yCoord + 1)){
+				if (seeX == pX && (yCoord + 1) == pY){
 					seePlayer = true;
 					break;
 				}
@@ -139,9 +148,7 @@ public:
 				seePlayer = true;
 				break;
 			}
-			if (levelArray[seeX][seeY] != '.'){
-				break;
-			}
+			
 			y++;
 		}
 		
@@ -151,8 +158,12 @@ public:
 			int seeX = xCoord + x;
 			int seeY = yCoord - y;
 			
+			if (levelArray[seeX][seeY] != '.'){
+				break;
+			}
+			
 			if (x == 4){
-				if (seeX == pX && seeY == (yCoord - 1)){
+				if (seeX == pX && (yCoord - 1) == pY){
 					seePlayer = true;
 					break;
 				}
@@ -162,29 +173,30 @@ public:
 				seePlayer = true;
 				break;
 			}
-			if (levelArray[seeX][seeY] != '.'){
-				break;
-			}
+			
 			y++;
 		}
 		
 		return seePlayer;
 	}
 
-	bool checkLeft(char levelarray[80][25], int pX, int pY) const{
+	bool checkLeft(char levelArray[80][25], int pX, int pY) const{
 		bool seePlayer = false;
 		int y = 0;
 		
 		// checking straight forward
 		for (int x = 1; x <= 04; x++){
 			int seeX = xCoord - x;
+			
+			if (levelArray[seeX][yCoord] != '.'){
+				break;
+			}
+			
 			if (seeX == pX){
 				seePlayer = true;
 				break;
 			}
-			if (levelArray[seeX][yCoord] != '.'){
-				break;
-			}
+			
 		}
 		
 		// diagonal down
@@ -193,13 +205,15 @@ public:
 			int seeX = xCoord - x;
 			int seeY = yCoord + y;
 			
+			if (levelArray[seeX][seeY] != '.'){
+				break;
+			}
+			
 			if (seeX == pX && seeY == pY){
 				seePlayer = true;
 				break;
 			}
-			if (levelArray[seeX][seeY] != '.'){
-				break;
-			}
+			
 			y++;
 		}
 		
@@ -209,13 +223,15 @@ public:
 			int seeX = xCoord - x;
 			int seeY = yCoord - y;
 			
+			if (levelArray[seeX][seeY] != '.'){
+				break;
+			}
+			
 			if (seeX == pX && seeY == pY){
 				seePlayer = true;
 				break;
 			}
-			if (levelArray[seeX][seeY] != '.'){
-				break;
-			}
+			
 			y++;
 		}
 		
@@ -225,8 +241,12 @@ public:
 			int seeX = xCoord - x;
 			int seeY = yCoord + y;
 			
+			if (levelArray[seeX][seeY] != '.'){
+				break;
+			}
+			
 			if (x == 4){
-				if (seeX == pX && seeY == (yCoord + 1)){
+				if (seeX == pX && (yCoord + 1) == pY){
 					seePlayer = true;
 					break;
 				}
@@ -236,9 +256,7 @@ public:
 				seePlayer = true;
 				break;
 			}
-			if (levelArray[seeX][seeY] != '.'){
-				break;
-			}
+			
 			y++;
 		}
 		
@@ -248,8 +266,12 @@ public:
 			int seeX = xCoord - x;
 			int seeY = yCoord + y;
 			
+			if (levelArray[seeX][seeY] != '.'){
+				break;
+			}
+			
 			if (x == 4){
-				if (seeX == pX && seeY == (yCoord - 1)){
+				if (seeX == pX && (yCoord - 1) == pY){
 					seePlayer = true;
 					break;
 				}
@@ -259,29 +281,30 @@ public:
 				seePlayer = true;
 				break;
 			}
-			if (levelArray[seeX][seeY] != '.'){
-				break;
-			}
+			
 			y++;
 		}
 		
 		return seePlayer;
 	}
 
-	bool checkUp(char levelarray[80][25], int pX, int pY) const{
+	bool checkUp(char levelArray[80][25], int pX, int pY) const{
 		bool seePlayer = false;
 		int x = 0;
 		
 		// checking straight forward
 		for (int y = 1; y <= 04; y++){
 			int seeY = yCoord - y;
+			
+			if (levelArray[xCoord][seeY] != '.'){
+				break;
+			}
+			
 			if (seeY == pY){
 				seePlayer = true;
 				break;
 			}
-			if (levelArray[xCoord][seeY] != '.'){
-				break;
-			}
+			
 		}
 		
 		// diagonal right SHOULD WORK
@@ -290,13 +313,15 @@ public:
 			int seeX = xCoord + x;
 			int seeY = yCoord - y;
 			
+			if (levelArray[seeX][seeY] != '.'){
+				break;
+			}
+			
 			if (seeX == pX && seeY == pY){
 				seePlayer = true;
 				break;
 			}
-			if (levelArray[seeX][seeY] != '.'){
-				break;
-			}
+			
 			x++;
 		}
 		
@@ -306,13 +331,15 @@ public:
 			int seeX = xCoord - x;
 			int seeY = yCoord - y;
 			
+			if (levelArray[seeX][seeY] != '.'){
+				break;
+			}
+			
 			if (seeX == pX && seeY == pY){
 				seePlayer = true;
 				break;
 			}
-			if (levelArray[seeX][seeY] != '.'){
-				break;
-			}
+			
 			x++;
 		}
 		
@@ -322,8 +349,12 @@ public:
 			int seeX = xCoord + x;
 			int seeY = yCoord - y;
 			
+			if (levelArray[seeX][seeY] != '.'){
+				break;
+			}
+			
 			if (y == 4){
-				if (seeY == pY && seeX == (xCoord + 1)){
+				if (seeY == pY && (xCoord + 1) == pX){
 					seePlayer = true;
 					break;
 				}
@@ -333,9 +364,7 @@ public:
 				seePlayer = true;
 				break;
 			}
-			if (levelArray[seeX][seeY] != '.'){
-				break;
-			}
+			
 			x++;
 		}
 		
@@ -345,8 +374,12 @@ public:
 			int seeX = xCoord - x;
 			int seeY = yCoord - y;
 			
+			if (levelArray[seeX][seeY] != '.'){
+				break;
+			}
+			
 			if (y == 4){
-				if (seeY == pY && seeX == (xCoord - 1)){
+				if (seeY == pY && (xCoord - 1) == pX){
 					seePlayer = true;
 					break;
 				}
@@ -356,29 +389,30 @@ public:
 				seePlayer = true;
 				break;
 			}
-			if (levelArray[seeX][seeY] != '.'){
-				break;
-			}
+			
 			x++;
 		}
 		
 		return seePlayer;
 	}
 
-	bool checkDown(char levelarray[80][25], int pX, int pY) const{
+	bool checkDown(char levelArray[80][25], int pX, int pY) const{
 		bool seePlayer = false;
 		int x = 0;
 		
 		// checking straight forward SHOULD WORK
 		for (int y = 1; y <= 04; y++){
 			int seeY = yCoord + y;
+			
+			if (levelArray[xCoord][seeY] != '.'){
+				break;
+			}
+			
 			if (seeY == pY){
 				seePlayer = true;
 				break;
 			}
-			if (levelArray[xCoord][seeY] != '.'){
-				break;
-			}
+			
 		}
 		
 		// diagonal right SHOULD WORK
@@ -387,13 +421,15 @@ public:
 			int seeX = xCoord + x;
 			int seeY = yCoord + y;
 			
+			if (levelArray[seeX][seeY] != '.'){
+				break;
+			}
+			
 			if (seeX == pX && seeY == pY){
 				seePlayer = true;
 				break;
 			}
-			if (levelArray[seeX][seeY] != '.'){
-				break;
-			}
+			
 			x++;
 		}
 		
@@ -403,13 +439,15 @@ public:
 			int seeX = xCoord - x;
 			int seeY = yCoord + y;
 			
+			if (levelArray[seeX][seeY] != '.'){
+				break;
+			}
+			
 			if (seeX == pX && seeY == pY){
 				seePlayer = true;
 				break;
 			}
-			if (levelArray[seeX][seeY] != '.'){
-				break;
-			}
+			
 			x++;
 		}
 		
@@ -419,8 +457,12 @@ public:
 			int seeX = xCoord + x;
 			int seeY = yCoord + y;
 			
+			if (levelArray[seeX][seeY] != '.'){
+				break;
+			}
+			
 			if (y == 4){
-				if (seeY == pY && seeX == (xCoord + 1)){
+				if (seeY == pY && (xCoord + 1) == pX){
 					seePlayer = true;
 					break;
 				}
@@ -430,9 +472,7 @@ public:
 				seePlayer = true;
 				break;
 			}
-			if (levelArray[seeX][seeY] != '.'){
-				break;
-			}
+			
 			x++;
 		}
 		
@@ -442,8 +482,12 @@ public:
 			int seeX = xCoord - x;
 			int seeY = yCoord + y;
 			
+			if (levelArray[seeX][seeY] != '.'){
+				break;
+			}
+			
 			if (y == 4){
-				if (seeY == pY && seeX == (xCoord - 1)){
+				if (seeY == pY && (xCoord - 1) == pX){
 					seePlayer = true;
 					break;
 				}
@@ -453,9 +497,7 @@ public:
 				seePlayer = true;
 				break;
 			}
-			if (levelArray[seeX][seeY] != '.'){
-				break;
-			}
+			
 			x++;
 		}
 		
