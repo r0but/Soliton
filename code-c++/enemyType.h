@@ -76,28 +76,96 @@ public:
 	
 	bool checkRight(char levelArray[80][25], int pX, int pY) const{
 		bool seePlayer = false;
-		/*for (int i = 1; i <= 4; i++){
-			if (xCoord + i == pX && (yCoord + (i - 1) >= pY &&
-				yCoord - (i - 1) <= pY)){
-					seePlayer = true;
-			}
-		}
-		*/
+		int y = 0;
 		
 		// checking straight forward
-		for (int x = 0; x <= 4; x++){
-			char seeX = xCoord + x;
+		for (int x = 1; x <= 4; x++){
+			int seeX = xCoord + x;
 			if (xCoord + x == pX){
 				seePlayer = true;
 				break;
 			}
-			if (levelArray[xCoord + x][yCoord] != '.'){
+			if (levelArray[seeX][yCoord] != '.'){
 				break;
 			}
 		}
 		
-		for (int x = 0; x <= 4; x++){
-			char seeX = xCoord + x;
+		// diagonal down
+		y = 0;
+		for (int x = 1; x <= 4; x++){
+			int seeX = xCoord + x;
+			int seeY = yCoord + y;
+			
+			if (seeX == pX && seeY == pY){
+				seePlayer = true;
+				break;
+			}
+			if (levelArray[seeX][seeY] != '.'){
+				break;
+			}
+			y++;
+		}
+		
+		// diagonal up
+		y = 0;
+		for (int x = 1; x <= 4; x++){
+			int seeX = xCoord + x;
+			int seeY = yCoord + y;
+			
+			if (seeX == pX && seeY == pY){
+				seePlayer = true;
+				break;
+			}
+			if (levelArray[seeX][seeY] != '.'){
+				break;
+			}
+			y--;
+		}
+		
+		// 3 spaces between straight forward and diagonal down
+		y = 1;
+		for (int x = 3; x <= 4; x++){
+			int seeX = xCoord + x;
+			int seeY = yCoord + y;
+			
+			if (x == 4){
+				if (seeX == pX && seeY == (yCoord + 1)){
+					seePlayer = true;
+					break;
+				}
+			}
+			
+			if (seeX == pX && seeY == pY){
+				seePlayer = true;
+				break;
+			}
+			if (levelArray[seeX][seeY] != '.'){
+				break;
+			}
+			y++;
+		}
+		
+		// 3 spaces between straight forward and diagonal up
+		y = 1;
+		for (int x = 3; x <= 4; x++){
+			int seeX = xCoord + x;
+			int seeY = yCoord - y;
+			
+			if (x == 4){
+				if (seeX == pX && seeY == (yCoord - 1)){
+					seePlayer = true;
+					break;
+				}
+			}
+			
+			if (seeX == pX && seeY == pY){
+				seePlayer = true;
+				break;
+			}
+			if (levelArray[seeX][seeY] != '.'){
+				break;
+			}
+			y++;
 		}
 		
 		return seePlayer;
@@ -105,34 +173,292 @@ public:
 
 	bool checkLeft(char levelarray[80][25], int pX, int pY) const{
 		bool seePlayer = false;
-		for (int i = 1; i <= 4; i++){
-			if (xCoord - i == pX && (yCoord + (i - 1) >= pY &&
-				yCoord - (i - 1) <= pY)){
-					seePlayer = true;
+		int y = 0;
+		
+		// checking straight forward
+		for (int x = 1; x <= 04; x++){
+			int seeX = xCoord - x;
+			if (seeX == pX){
+				seePlayer = true;
+				break;
+			}
+			if (levelArray[seeX][yCoord] != '.'){
+				break;
 			}
 		}
+		
+		// diagonal down
+		y = 0;
+		for (int x = 1; x <= 4; x++){
+			int seeX = xCoord - x;
+			int seeY = yCoord + y;
+			
+			if (seeX == pX && seeY == pY){
+				seePlayer = true;
+				break;
+			}
+			if (levelArray[seeX][seeY] != '.'){
+				break;
+			}
+			y++;
+		}
+		
+		// diagonal up
+		y = 0;
+		for (int x = 1; x <= 4; x++){
+			int seeX = xCoord - x;
+			int seeY = yCoord - y;
+			
+			if (seeX == pX && seeY == pY){
+				seePlayer = true;
+				break;
+			}
+			if (levelArray[seeX][seeY] != '.'){
+				break;
+			}
+			y++;
+		}
+		
+		// 3 spaces between straight forward and diagonal down
+		y = 1;
+		for (int x = 3; x <= 4; x++){
+			int seeX = xCoord - x;
+			int seeY = yCoord + y;
+			
+			if (x == 4){
+				if (seeX == pX && seeY == (yCoord + 1)){
+					seePlayer = true;
+					break;
+				}
+			}
+			
+			if (seeX == pX && seeY == pY){
+				seePlayer = true;
+				break;
+			}
+			if (levelArray[seeX][seeY] != '.'){
+				break;
+			}
+			y++;
+		}
+		
+		// 3 spaces between straight forward and diagonal up
+		y = -1;
+		for (int x = 3; x <= 4; x++){
+			int seeX = xCoord - x;
+			int seeY = yCoord + y;
+			
+			if (x == 4){
+				if (seeX == pX && seeY == (yCoord - 1)){
+					seePlayer = true;
+					break;
+				}
+			}
+			
+			if (seeX == pX && seeY == pY){
+				seePlayer = true;
+				break;
+			}
+			if (levelArray[seeX][seeY] != '.'){
+				break;
+			}
+			y++;
+		}
+		
 		return seePlayer;
 	}
 
 	bool checkUp(char levelarray[80][25], int pX, int pY) const{
 		bool seePlayer = false;
-		for (int i = 1; i <= 4; i++){
-			if (yCoord - i == pY && (xCoord + (i - 1) >= pX &&
-				xCoord - (i - 1) <= pX)){
-					seePlayer = true;
+		int x = 0;
+		
+		// checking straight forward
+		for (int y = 1; y <= 04; y++){
+			int seeY = yCoord - y;
+			if (seeY == pY){
+				seePlayer = true;
+				break;
+			}
+			if (levelArray[xCoord][seeY] != '.'){
+				break;
 			}
 		}
+		
+		// diagonal right SHOULD WORK
+		x = 0;
+		for (int y = 1; y <= 4; y++){
+			int seeX = xCoord + x;
+			int seeY = yCoord - y;
+			
+			if (seeX == pX && seeY == pY){
+				seePlayer = true;
+				break;
+			}
+			if (levelArray[seeX][seeY] != '.'){
+				break;
+			}
+			x++;
+		}
+		
+		// diagonal left SHOULD WORK
+		x = 0;
+		for (int y = 1; y <= 4; y++){
+			int seeX = xCoord - x;
+			int seeY = yCoord - y;
+			
+			if (seeX == pX && seeY == pY){
+				seePlayer = true;
+				break;
+			}
+			if (levelArray[seeX][seeY] != '.'){
+				break;
+			}
+			x++;
+		}
+		
+		// 3 spaces between straight forward and diagonal right SHOULD WORK
+		x = 1;
+		for (int y = 3; y <= 4; y++){
+			int seeX = xCoord + x;
+			int seeY = yCoord - y;
+			
+			if (y == 4){
+				if (seeY == pY && seeX == (xCoord + 1)){
+					seePlayer = true;
+					break;
+				}
+			}
+			
+			if (seeX == pX && seeY == pY){
+				seePlayer = true;
+				break;
+			}
+			if (levelArray[seeX][seeY] != '.'){
+				break;
+			}
+			x++;
+		}
+		
+		// 3 spaces between straight forward and diagonal left SHOULD WORK
+		x = 1;
+		for (int y = 3; y <= 4; y++){
+			int seeX = xCoord - x;
+			int seeY = yCoord - y;
+			
+			if (y == 4){
+				if (seeY == pY && seeX == (xCoord - 1)){
+					seePlayer = true;
+					break;
+				}
+			}
+			
+			if (seeX == pX && seeY == pY){
+				seePlayer = true;
+				break;
+			}
+			if (levelArray[seeX][seeY] != '.'){
+				break;
+			}
+			x++;
+		}
+		
 		return seePlayer;
 	}
 
 	bool checkDown(char levelarray[80][25], int pX, int pY) const{
 		bool seePlayer = false;
-		for (int i = 1; i <= 4; i++){
-			if (yCoord + i == pY && (xCoord + (i - 1) >= pX &&
-				xCoord - (i - 1) <= pX)){
-					seePlayer = true;
+		int x = 0;
+		
+		// checking straight forward SHOULD WORK
+		for (int y = 1; y <= 04; y++){
+			int seeY = yCoord + y;
+			if (seeY == pY){
+				seePlayer = true;
+				break;
+			}
+			if (levelArray[xCoord][seeY] != '.'){
+				break;
 			}
 		}
+		
+		// diagonal right SHOULD WORK
+		x = 0;
+		for (int y = 1; y <= 4; y++){
+			int seeX = xCoord + x;
+			int seeY = yCoord + y;
+			
+			if (seeX == pX && seeY == pY){
+				seePlayer = true;
+				break;
+			}
+			if (levelArray[seeX][seeY] != '.'){
+				break;
+			}
+			x++;
+		}
+		
+		// diagonal left SHOULD WORK
+		x = 0;
+		for (int y = 1; y <= 4; y++){
+			int seeX = xCoord - x;
+			int seeY = yCoord + y;
+			
+			if (seeX == pX && seeY == pY){
+				seePlayer = true;
+				break;
+			}
+			if (levelArray[seeX][seeY] != '.'){
+				break;
+			}
+			x++;
+		}
+		
+		// 3 spaces between straight forward and diagonal right SHOULD WORK
+		x = 1;
+		for (int y = 3; y <= 4; y++){
+			int seeX = xCoord + x;
+			int seeY = yCoord + y;
+			
+			if (y == 4){
+				if (seeY == pY && seeX == (xCoord + 1)){
+					seePlayer = true;
+					break;
+				}
+			}
+			
+			if (seeX == pX && seeY == pY){
+				seePlayer = true;
+				break;
+			}
+			if (levelArray[seeX][seeY] != '.'){
+				break;
+			}
+			x++;
+		}
+		
+		// 3 spaces between straight forward and diagonal left SHOULD WORK
+		x = 1;
+		for (int y = 3; y <= 4; y++){
+			int seeX = xCoord - x;
+			int seeY = yCoord + y;
+			
+			if (y == 4){
+				if (seeY == pY && seeX == (xCoord - 1)){
+					seePlayer = true;
+					break;
+				}
+			}
+			
+			if (seeX == pX && seeY == pY){
+				seePlayer = true;
+				break;
+			}
+			if (levelArray[seeX][seeY] != '.'){
+				break;
+			}
+			x++;
+		}
+		
 		return seePlayer;
 	}
 
@@ -141,6 +467,8 @@ public:
 			return 1;
 		}
 		
+		// just need to have return(checkDirection()), will fix later.
+		// All this sight code is hacky garbage. I'm sorry to whoever reads this.
 		switch(heading){
 			case 'r':
 				if (checkRight(levelArray, pX, pY))
