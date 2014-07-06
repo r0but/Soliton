@@ -96,6 +96,7 @@ public:
 		
 		double slope = (double)yOffset / (double)xOffset;
 		cout << "Right Slope: " << slope << endl;
+		
 		// Quick hack to make hiding behind walls more forgiving
 		if (levelArray[pX - 1][pY] != '.'){
 			return false;
@@ -103,6 +104,9 @@ public:
 		
 		// Drawing line toward player to see if the enemy should see them.
 		// Returns false if line hits a wall.
+		// 
+		// Note to self: instead of hacky shit 15 or so lines up, possibly
+		// 	put (y += (x * slope)) before (x++)
 		for (int y = 0, x = 0; x <= 4; x++, y += (x * slope)){
 			if (levelArray[xCoord + x][yCoord + y] != '.'){
 				return false;
