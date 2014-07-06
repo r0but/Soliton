@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <cmath>
 #include "levelType.h"
 
 using namespace std;

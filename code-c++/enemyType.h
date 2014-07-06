@@ -68,6 +68,7 @@ public:
 		else
 			return 'O';
 	}
+	
 	void setPosition(int x, int y, int headingSet){
 		xCoord = x;
 		yCoord = y;
@@ -75,433 +76,159 @@ public:
 	}
 	
 	bool checkRight(char levelArray[80][25], int pX, int pY) const{
-		bool seePlayer = false;
-		int y = 0;
-		
-		// checking straight forward
-		for (int x = 1; x <= 4; x++){
-			int seeX = xCoord + x;
-			
-			if (levelArray[seeX][yCoord] != '.'){
-				break;
-			}
-			
-			if (seeX == pX){
-				seePlayer = true;
-				break;
-			}
-			
+		// Return false if player is behind enemy
+		if (pX < xCoord){
+			return false;
 		}
 		
-		// diagonal down
-		y = 0;
-		for (int x = 1; x <= 4; x++){
-			int seeX = xCoord + x;
-			int seeY = yCoord + y;
-			
-			if (levelArray[seeX][seeY] != '.'){
-				break;
-			}
-			if (seeX == pX && seeY == pY){
-				seePlayer = true;
-				break;
-			}
-			
-			y++;
+		int xOffset = pX - xCoord;
+		int yOffset = pY - yCoord;
+		
+		if (xOffset == 0){
+			return false;
+		}
+		if (abs(xOffset) > 4 || abs(yOffset) > 4){
+			return false;
+		}
+		if (abs(xOffset) == 1 && abs(yOffset) != 0){
+			return false;
 		}
 		
-		// diagonal up
-		y = 0;
-		for (int x = 1; x <= 4; x++){
-			int seeX = xCoord + x;
-			int seeY = yCoord + y;
-			
-			if (levelArray[seeX][seeY] != '.'){
-				break;
-			}
-			if (seeX == pX && seeY == pY){
-				seePlayer = true;
-				break;
-			}
-			
-			y--;
+		double slope = (double)yOffset / (double)xOffset;
+		cout << "Right Slope: " << slope << endl;
+		// Quick hack to make hiding behind walls more forgiving
+		if (levelArray[pX - 1][pY] != '.'){
+			return false;
 		}
 		
-		// 3 spaces between straight forward and diagonal down
-		y = 1;
-		for (int x = 3; x <= 4; x++){
-			int seeX = xCoord + x;
-			int seeY = yCoord + y;
-			
-			if (levelArray[seeX][seeY] != '.'){
-				break;
+		// Drawing line toward player to see if the enemy should see them.
+		// Returns false if line hits a wall.
+		for (int y = 0, x = 0; x <= 4; x++, y += (x * slope)){
+			if (levelArray[xCoord + x][yCoord + y] != '.'){
+				return false;
 			}
-			
-			if (x == 4){
-				if (seeX == pX && (yCoord + 1) == pY){
-					seePlayer = true;
-					break;
-				}
+			if (xCoord + x == pX && yCoord + y == pY){
+				return true;
 			}
-			
-			if (seeX == pX && seeY == pY){
-				seePlayer = true;
-				break;
-			}
-			
-			y++;
 		}
-		
-		// 3 spaces between straight forward and diagonal up
-		y = 1;
-		for (int x = 3; x <= 4; x++){
-			int seeX = xCoord + x;
-			int seeY = yCoord - y;
-			
-			if (levelArray[seeX][seeY] != '.'){
-				break;
-			}
-			
-			if (x == 4){
-				if (seeX == pX && (yCoord - 1) == pY){
-					seePlayer = true;
-					break;
-				}
-			}
-			
-			if (seeX == pX && seeY == pY){
-				seePlayer = true;
-				break;
-			}
-			
-			y++;
-		}
-		
-		return seePlayer;
+		return false;
 	}
 
 	bool checkLeft(char levelArray[80][25], int pX, int pY) const{
-		bool seePlayer = false;
-		int y = 0;
-		
-		// checking straight forward
-		for (int x = 1; x <= 04; x++){
-			int seeX = xCoord - x;
-			
-			if (levelArray[seeX][yCoord] != '.'){
-				break;
-			}
-			
-			if (seeX == pX){
-				seePlayer = true;
-				break;
-			}
-			
+		// Return false if player is behind enemy
+		if (pX > xCoord){
+			return false;
 		}
 		
-		// diagonal down
-		y = 0;
-		for (int x = 1; x <= 4; x++){
-			int seeX = xCoord - x;
-			int seeY = yCoord + y;
-			
-			if (levelArray[seeX][seeY] != '.'){
-				break;
-			}
-			
-			if (seeX == pX && seeY == pY){
-				seePlayer = true;
-				break;
-			}
-			
-			y++;
+		int xOffset = pX - xCoord;
+		int yOffset = pY - yCoord;
+		
+		if (xOffset == 0){
+			return false;
+		}
+		if (xOffset > 4 || yOffset > 4){
+			return false;
+		}
+		if (abs(xOffset) == 1 && abs(yOffset) != 0){
+			return false;
 		}
 		
-		// diagonal up
-		y = 0;
-		for (int x = 1; x <= 4; x++){
-			int seeX = xCoord - x;
-			int seeY = yCoord - y;
-			
-			if (levelArray[seeX][seeY] != '.'){
-				break;
-			}
-			
-			if (seeX == pX && seeY == pY){
-				seePlayer = true;
-				break;
-			}
-			
-			y++;
+		double slope = (double)yOffset / (double)xOffset;
+		
+		// Quick hack to make hiding behind walls more forgiving
+		if (levelArray[pX + 1][pY] != '.'){
+			return false;
 		}
 		
-		// 3 spaces between straight forward and diagonal down
-		y = 1;
-		for (int x = 3; x <= 4; x++){
-			int seeX = xCoord - x;
-			int seeY = yCoord + y;
-			
-			if (levelArray[seeX][seeY] != '.'){
-				break;
+		// Drawing line toward player to see if the enemy should see them.
+		// Returns false if line hits a wall.
+		for (int y = 0, x = 0; x >= -4; x--, y += (x * slope)){
+			if (levelArray[xCoord + x][yCoord + y] != '.'){
+				return false;
 			}
-			
-			if (x == 4){
-				if (seeX == pX && (yCoord + 1) == pY){
-					seePlayer = true;
-					break;
-				}
+			if (xCoord + x == pX && yCoord + y == pY){
+				return true;
 			}
-			
-			if (seeX == pX && seeY == pY){
-				seePlayer = true;
-				break;
-			}
-			
-			y++;
 		}
-		
-		// 3 spaces between straight forward and diagonal up
-		y = -1;
-		for (int x = 3; x <= 4; x++){
-			int seeX = xCoord - x;
-			int seeY = yCoord + y;
-			
-			if (levelArray[seeX][seeY] != '.'){
-				break;
-			}
-			
-			if (x == 4){
-				if (seeX == pX && (yCoord - 1) == pY){
-					seePlayer = true;
-					break;
-				}
-			}
-			
-			if (seeX == pX && seeY == pY){
-				seePlayer = true;
-				break;
-			}
-			
-			y++;
-		}
-		
-		return seePlayer;
+		return false;
 	}
 
 	bool checkUp(char levelArray[80][25], int pX, int pY) const{
-		bool seePlayer = false;
-		int x = 0;
-		
-		// checking straight forward
-		for (int y = 1; y <= 04; y++){
-			int seeY = yCoord - y;
-			
-			if (levelArray[xCoord][seeY] != '.'){
-				break;
-			}
-			
-			if (seeY == pY){
-				seePlayer = true;
-				break;
-			}
-			
+		// Return false if player is behind enemy
+		if (pY > yCoord){
+			return false;
 		}
 		
-		// diagonal right SHOULD WORK
-		x = 0;
-		for (int y = 1; y <= 4; y++){
-			int seeX = xCoord + x;
-			int seeY = yCoord - y;
-			
-			if (levelArray[seeX][seeY] != '.'){
-				break;
-			}
-			
-			if (seeX == pX && seeY == pY){
-				seePlayer = true;
-				break;
-			}
-			
-			x++;
+		int xOffset = pX - xCoord;
+		int yOffset = pY - yCoord;
+		
+		if (yOffset == 0){
+			return false;
+		}
+		if (xOffset > 4 || yOffset > 4){
+			return false;
+		}
+		if (abs(yOffset) == 1 && abs(xOffset) != 0){
+			return false;
 		}
 		
-		// diagonal left SHOULD WORK
-		x = 0;
-		for (int y = 1; y <= 4; y++){
-			int seeX = xCoord - x;
-			int seeY = yCoord - y;
-			
-			if (levelArray[seeX][seeY] != '.'){
-				break;
-			}
-			
-			if (seeX == pX && seeY == pY){
-				seePlayer = true;
-				break;
-			}
-			
-			x++;
+		double slope = (double)xOffset / (double)yOffset;
+		
+		// Quick hack to make hiding behind walls more forgiving
+		if (levelArray[pX][pY - 1] != '.'){
+			return false;
 		}
 		
-		// 3 spaces between straight forward and diagonal right SHOULD WORK
-		x = 1;
-		for (int y = 3; y <= 4; y++){
-			int seeX = xCoord + x;
-			int seeY = yCoord - y;
-			
-			if (levelArray[seeX][seeY] != '.'){
-				break;
+		// Drawing line toward player to see if the enemy should see them.
+		// Returns false if line hits a wall.
+		for (int y = 0, x = 0; y >= -4; y--, x += (y * slope)){
+			if (levelArray[xCoord + x][yCoord + y] != '.'){
+				return false;
 			}
-			
-			if (y == 4){
-				if (seeY == pY && (xCoord + 1) == pX){
-					seePlayer = true;
-					break;
-				}
+			if (xCoord + x == pX && yCoord + y == pY){
+				return true;
 			}
-			
-			if (seeX == pX && seeY == pY){
-				seePlayer = true;
-				break;
-			}
-			
-			x++;
 		}
-		
-		// 3 spaces between straight forward and diagonal left SHOULD WORK
-		x = 1;
-		for (int y = 3; y <= 4; y++){
-			int seeX = xCoord - x;
-			int seeY = yCoord - y;
-			
-			if (levelArray[seeX][seeY] != '.'){
-				break;
-			}
-			
-			if (y == 4){
-				if (seeY == pY && (xCoord - 1) == pX){
-					seePlayer = true;
-					break;
-				}
-			}
-			
-			if (seeX == pX && seeY == pY){
-				seePlayer = true;
-				break;
-			}
-			
-			x++;
-		}
-		
-		return seePlayer;
+		return false;
 	}
 
 	bool checkDown(char levelArray[80][25], int pX, int pY) const{
-		bool seePlayer = false;
-		int x = 0;
-		
-		// checking straight forward SHOULD WORK
-		for (int y = 1; y <= 04; y++){
-			int seeY = yCoord + y;
-			
-			if (levelArray[xCoord][seeY] != '.'){
-				break;
-			}
-			
-			if (seeY == pY){
-				seePlayer = true;
-				break;
-			}
-			
+		// Return false if player is behind enemy
+		if (pY < yCoord){
+			return false;
 		}
 		
-		// diagonal right SHOULD WORK
-		x = 0;
-		for (int y = 1; y <= 4; y++){
-			int seeX = xCoord + x;
-			int seeY = yCoord + y;
-			
-			if (levelArray[seeX][seeY] != '.'){
-				break;
-			}
-			
-			if (seeX == pX && seeY == pY){
-				seePlayer = true;
-				break;
-			}
-			
-			x++;
+		int xOffset = pX - xCoord;
+		int yOffset = pY - yCoord;
+		
+		if (yOffset == 0){
+			return false;
+		}
+		if (xOffset > 4 || yOffset > 4){
+			return false;
+		}
+		if (abs(yOffset) == 1 && abs(xOffset) != 0){
+			return false;
 		}
 		
-		// diagonal left SHOULD WORK
-		x = 0;
-		for (int y = 1; y <= 4; y++){
-			int seeX = xCoord - x;
-			int seeY = yCoord + y;
-			
-			if (levelArray[seeX][seeY] != '.'){
-				break;
-			}
-			
-			if (seeX == pX && seeY == pY){
-				seePlayer = true;
-				break;
-			}
-			
-			x++;
+		double slope = (double)xOffset / (double)yOffset;
+		
+		// Quick hack to make hiding behind walls more forgiving
+		if (levelArray[pX][pY + 1] != '.'){
+			return false;
 		}
 		
-		// 3 spaces between straight forward and diagonal right SHOULD WORK
-		x = 1;
-		for (int y = 3; y <= 4; y++){
-			int seeX = xCoord + x;
-			int seeY = yCoord + y;
-			
-			if (levelArray[seeX][seeY] != '.'){
-				break;
+		// Drawing line toward player to see if the enemy should see them.
+		// Returns false if line hits a wall.
+		for (int y = 0, x = 0; y <= 4; y++, x += (y * slope)){
+			if (levelArray[xCoord + x][yCoord + y] != '.'){
+				return false;
 			}
-			
-			if (y == 4){
-				if (seeY == pY && (xCoord + 1) == pX){
-					seePlayer = true;
-					break;
-				}
+			if (xCoord + x == pX && yCoord + y == pY){
+				return true;
 			}
-			
-			if (seeX == pX && seeY == pY){
-				seePlayer = true;
-				break;
-			}
-			
-			x++;
 		}
-		
-		// 3 spaces between straight forward and diagonal left SHOULD WORK
-		x = 1;
-		for (int y = 3; y <= 4; y++){
-			int seeX = xCoord - x;
-			int seeY = yCoord + y;
-			
-			if (levelArray[seeX][seeY] != '.'){
-				break;
-			}
-			
-			if (y == 4){
-				if (seeY == pY && (xCoord - 1) == pX){
-					seePlayer = true;
-					break;
-				}
-			}
-			
-			if (seeX == pX && seeY == pY){
-				seePlayer = true;
-				break;
-			}
-			
-			x++;
-		}
-		
-		return seePlayer;
+		return false;
 	}
 
 	bool checkForPlayer(char levelArray[80][25], int pX, int pY){
