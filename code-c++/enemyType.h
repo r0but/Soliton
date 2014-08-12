@@ -57,6 +57,9 @@ public:
 		return yCoord;
 	}
 	char toDisplay(){
+		if (!checkIfAlive()){
+			return 'x';
+		}
 		if (heading == 'l')
 			return '>';
 		else if (heading == 'r')
@@ -241,7 +244,8 @@ public:
 		}
 		
 		// just need to have return(checkDirection()), will fix later.
-		// All this sight code is hacky garbage. I'm sorry to whoever reads this.
+		// All this sight code is hacky garbage. 
+		// I'm sorry to whoever reads this.
 		switch(heading){
 			case 'r':
 				if (checkRight(levelArray, pX, pY))
@@ -339,11 +343,21 @@ public:
 		} while (currentChar != '\n' && currentChar != '#' && !levelFile.eof());
 	}
 	
+	bool checkIfAlive(){
+		return isAlive;
+	}
+	
+	void killEnemy(){
+		isAlive = 0;
+		return;
+	}
+	
 	enemyType(int xSet = 3, int ySet = 3, int headingSet = 'l'){
 		xCoord = xSet;
 		yCoord = ySet;
 		headingSet = 'l';
 		pathLoc = 0;
+		isAlive = 1;
 		for (int i = 0; i < 100; i++){
 			patrolPath[i].action = '$';
 			patrolPath[i].direction = '$';
@@ -356,6 +370,7 @@ private:
 	actionType patrolPath[100];
 	int pathLoc;
 	char heading;
+	bool isAlive;
 };
 
 #endif

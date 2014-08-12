@@ -45,8 +45,12 @@ void drawLossScreen(){
 void gameLoop(levelType level){
 	char userInput;
 	while(true){
+		
+		// winOrLose - 0 means game isn't finished, 1 means win, 2 means loss
 		int winOrLose = 0;
+		
 		level.drawMap();
+		
 		cin >> userInput;
 		if (userInput == 'q')
 			break;
@@ -92,7 +96,8 @@ int main(){
 		gameLoop(level);
 		
 		char cUserCont;
-		cout << endl << "Would you like to continue, quit, or restart? (c/q/r): ";
+		cout << endl << "Would you like to continue, quit, or restart? "
+				<< "(c/q/r): ";
 		cin >> cUserCont;
 		
 		if (cUserCont == 'c' || cUserCont == 'C')

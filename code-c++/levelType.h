@@ -35,16 +35,36 @@ using namespace std;
 class levelType{
 public:
 	int iterateMap(char input){
-		player.move(input, levelArray);
+	
+		if (input == 'a' || input == 'w' || input == 's' || input == 'd'){
+			player.move(input, levelArray);
+		}
+		
 		int pX = player.getXCoord();
 		int pY = player.getYCoord();
 		
 		for (int i = 0; i < numOfEnemies; i++){
-			enemyArray[i].moveAlongPath();
+		
+			if (enemyArray[i].getXCoord() == pX && 
+					enemyArray[i].getYCoord() == pY){
+					
+				enemyArray[i].killEnemy();
+				
+			}
 		}
 		
 		for (int i = 0; i < numOfEnemies; i++){
-			bool isCaught = enemyArray[i].checkForPlayer(levelArray, pX, pY);
+			if (enemyArray[i].checkIfAlive()){
+				enemyArray[i].moveAlongPath();
+			}
+		}
+		
+		for (int i = 0; i < numOfEnemies; i++){
+			bool isCaught = 0;
+			if (enemyArray[i].checkIfAlive()){
+				isCaught = enemyArray[i].checkForPlayer(levelArray, 
+															 pX, pY);
+			}
 			if (isCaught)
 				return 2;
 		}
@@ -125,7 +145,7 @@ public:
 	void buildLevel(ifstream &levelFile){
 	
 		// Initialize array with ' ' (space) 
-		// characters, signifying an empty tile
+		// characters, signifying empty tiles
 		for (int y = 0; y < 25; y++){
 			for (int x = 0; x < 80; x++){
 				levelArray[x][y] = ' ';
