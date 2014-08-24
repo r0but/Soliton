@@ -152,17 +152,47 @@ public:
 	void playerShoot(){
 		int xFromPlayer;
 		int yFromPlayer;
+		int playerX = player.getXCoord();
+		int playerY = player.getYCoord();
+		double slope;
 		cout << "What tile, relative to you, do you want to shoot? ";
 		cin >> xFromPlayer;
-		cin >> yFromPlayer;		
+		cin >> yFromPlayer;
+		
+		if (xFromPlayer == 0){
+			slope = 1000;
+		}
+		else{
+			slope = (double)yFromPlayer / (double)xFromPlayer;
+		}
+		
+		int invSlope = 1.0 / slope;
 		
 		int finalX = player.getXCoord() + xFromPlayer;
 		int finalY = player.getYCoord() + yFromPlayer;
 		
 		int enemyToKill = whichEnemyHere(finalX, finalY);
-		if (enemyToKill >= 0){
+		
+		bool isWall = false;
+		if (slope < 1.00005 || slope > -1.00005){
+			for (int x = playerX, y = playerY; y < finalY; y++, x += (y * invSlope)){
+				if (levelArray[x][y] != '.'){
+					isWall = true;
+				}
+			}			
+		}
+		else{
+			for (int x = playerX, y = playerY; x < finalX; x++, y += (x * slope)){
+				if (levelArray[x][y] != '.'){
+					isWall = true;
+				}
+			}
+		}
+		
+		if (!isWall){
 			enemyArray[enemyToKill].killEnemy();
 		}
+		
 		return;
 	}
 	
