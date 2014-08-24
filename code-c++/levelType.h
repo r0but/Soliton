@@ -39,6 +39,9 @@ public:
 		if (input == 'a' || input == 'w' || input == 's' || input == 'd'){
 			player.move(input, levelArray);
 		}
+		if (input == 'f'){
+			playerShoot();
+		}
 		
 		int pX = player.getXCoord();
 		int pY = player.getYCoord();
@@ -91,7 +94,9 @@ public:
 					endOfMap = true;
 					break;
 				}
-				else if (isEnemyHere(x, y)){
+				// isEnemyHere used here TODO: Fix this code to fit with refactoring of
+				// 	isEnemyHere to whichEnemyHere()
+				else if (whichEnemyHere(x, y) != -1){
 					for (int i = 0; i < numOfEnemies; i++){
 						if (enemyArray[i].getXCoord() == x &&
 								enemyArray[i].getYCoord() == y){
@@ -123,23 +128,42 @@ public:
 			return false;
 	}
 	
-	bool isEnemyHere(int x, int y){
+	int whichEnemyHere(int x, int y){
 		for (int i = 0; i < numOfEnemies; i++){
 			if (enemyArray[i].getXCoord() == x && 
 					enemyArray[i].getYCoord() == y){
-				return true;				
+				return i;				
 			}
 		}
-		return false;
+		return -1;
 	}
 
 	void loadEnemyPaths(ifstream &levelFile){
-		if (levelFile.eof())
+		if (levelFile.eof() || levelFile.peek() == '*')
 			return;
 
 		for (int i = 0; i < numOfEnemies; i++){
 			enemyArray[i].loadPatrolPath(levelFile);
+			if (levelFile.peek() == '*')
+				break;
 		}
+	}
+	
+	void playerShoot(){
+		int xFromPlayer;
+		int yFromPlayer;
+		cout << "What tile, relative to you, do you want to shoot? ";
+		cin >> xFromPlayer;
+		cin >> yFromPlayer;		
+		
+		int finalX = player.getXCoord() + xFromPlayer;
+		int finalY = player.getYCoord() + yFromPlayer;
+		
+		int enemyToKill = whichEnemyHere(finalX, finalY);
+		if (enemyToKill >= 0){
+			enemyArray[enemyToKill].killEnemy();
+		}
+		return;
 	}
 	
 	void buildLevel(ifstream &levelFile){
@@ -209,6 +233,8 @@ public:
 			}		
 		}
 		loadEnemyPaths(levelFile);
+		int ammoCount = levelFile.get();
+		player.setAmmoCount(ammoCount);
 	}
 
 	levelType(ifstream &levelFile){

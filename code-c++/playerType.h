@@ -69,16 +69,33 @@ public:
 	char getIcon(){
 		return icon;
 	}
+	void setAmmoCount(int ammoSet){
+		if (ammoSet >= 0)
+			ammoLeft = ammoSet;
+		else
+			ammoLeft = 0;
+		return;
+	}
+	void addToAmmoCount(int ammoAdd){
+		if (ammoAdd >= 0)
+			ammoLeft += ammoAdd;
+		return;
+	}
+	int getAmmoCount(){
+		return ammoLeft;
+	}
 	
-	playerType(int xSet = 10, int ySet = 10){
+	playerType(int xSet = 10, int ySet = 10, int ammo = 0){
 		xCoord = xSet;
 		yCoord = ySet;
+		ammoLeft = ammo;
 		icon = '@';
 	}	
 private:
 	int xCoord;
 	int yCoord;
 	char icon;
+	int ammoLeft;
 };
 
 #endif
