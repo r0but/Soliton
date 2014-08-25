@@ -81,6 +81,13 @@ public:
 			ammoLeft += ammoAdd;
 		return;
 	}
+	void decrementAmmoCount(){
+		if (ammoLeft > 0){
+			ammoLeft--;
+		}
+	return;
+	}
+	
 	int getAmmoCount(){
 		return ammoLeft;
 	}

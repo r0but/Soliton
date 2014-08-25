@@ -150,6 +150,10 @@ public:
 	}
 	
 	void playerShoot(){
+		if (player.getAmmoCount() > 0){
+			return;
+		}
+		
 		int xFromPlayer;
 		int yFromPlayer;
 		int playerX = player.getXCoord();
@@ -192,6 +196,8 @@ public:
 		if (!isWall){
 			enemyArray[enemyToKill].killEnemy();
 		}
+		
+		player.decrementAmmoCount();
 		
 		return;
 	}
