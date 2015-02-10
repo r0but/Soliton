@@ -85,7 +85,7 @@ public:
 		if (ammoLeft > 0){
 			ammoLeft--;
 		}
-	return;
+        return;
 	}
 	
 	int getAmmoCount(){
